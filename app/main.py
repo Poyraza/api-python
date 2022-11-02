@@ -4,16 +4,6 @@ from config import mysql
 from flask import jsonify
 from flask import flash, request
 
-conn = mysql.connect()
-cursor = conn.cursor()
-sql_query = """ CREATE TABLE kayit (
-    id INT NOT NULL AUTO_INCREMENT,
-    ad varchar(150) NOT NULL,
-    soyad varchar(150) NOT NULL,
-    PRIMARY KEY (id)
-)"""
-cursor.execute(sql_query)
-conn.close()
 
 @app.route('/kayit', methods=['GET', 'POST'])
 def kayit():
