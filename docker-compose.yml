@@ -7,11 +7,22 @@ services:
         depends_on:
             - flask-app
         volumes:
-            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./default.conf:/etc/nginx/conf.d/default.conf
+            - ./nginx.conf:/etc/nginx/nginx.conf
         networks:
             - backend
         ports:
             - "80:80"
+        environment:
+          PS1: "\\u@\\h:\\w\\$$ "
+        logging:
+          driver: "fluentd"
+          options:
+            fluentd-address: "monitoring_fluent_bit"
+            tag: "wait_nginx"
+            mode: "non-blocking"
+            max-buffer-size: "2m"
+            fluentd-async-connect: "true"
 
     flask-app:
         container_name: flask-app
